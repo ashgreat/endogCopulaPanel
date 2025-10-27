@@ -1,0 +1,33 @@
+Package: endogCopulaPanel
+Type: Package
+Title: Panel Gaussian Copula Endogeneity Correction
+Version: 0.0.0.9000
+Authors@R: person(given = "Ashwin", family = "Malshe", role = c("aut", "cre"))
+Description: Implements the fixed-effects panel Gaussian copula estimator by Haschka (2022),
+    refactored from the original EndogCopula scripts into a standalone package.
+License: MIT + file LICENSE
+Depends: R (>= 4.1)
+Imports: MASS,
+         Formula,
+         Metrics,
+         Matrix,
+         copula,
+         data.table,
+         dplyr,
+         extRC,
+         ks,
+         matrixcalc,
+         mvtnorm,
+         nlme,
+         nortest,
+         parallel,
+         pbapply,
+         resample,
+         stats,
+         tsoutliers
+Suggests: testthat (>= 3.0.0)
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.3
+Config/testthat/edition: 3
