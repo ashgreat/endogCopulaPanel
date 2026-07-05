@@ -1,0 +1,28 @@
+url: https://ashgreat.github.io/endogCopulaPanel/
+
+template:
+  bootstrap: 5
+
+navbar:
+  structure:
+    left:  [intro, reference, news]
+    right: [related, github]
+  components:
+    related:
+      text: Related packages
+      menu:
+        - text: endogCopula (cross-sectional)
+          href: https://ashgreat.github.io/endogCopula/
+        - text: endogCopulaBayes (Bayesian)
+          href: https://ashgreat.github.io/endogCopulaBayes/
+    github:
+      icon: fab fa-github fa-lg
+      href: https://github.com/ashgreat/endogCopulaPanel
+      aria-label: GitHub
+
+reference:
+  - title: Panel Gaussian copula estimator
+    desc: >
+      Fixed-effects panel Gaussian copula endogeneity correction (Haschka 2022).
+    contents:
+      - CopRegML_par

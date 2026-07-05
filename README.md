@@ -4,6 +4,8 @@
 [![R-CMD-check](https://github.com/ashgreat/endogCopulaPanel/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/ashgreat/endogCopulaPanel/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
+Package website: <https://ashgreat.github.io/endogCopulaPanel/>
+
 `endogCopulaPanel` implements the fixed-effects Gaussian copula estimator for
 panel data by Haschka (2022, *Journal of Marketing Research*). The estimator
 corrects for endogenous regressors in linear fixed-effects panel models
