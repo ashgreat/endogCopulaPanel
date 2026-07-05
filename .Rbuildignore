@@ -1,0 +1,8 @@
+^\.github$
+^README\.Rmd$
+^LICENSE\.md$
+^pkgdown$
+^\.DS_Store$
+^\.vscode$
+^.*\.Rproj$
+^\.Rproj\.user$
