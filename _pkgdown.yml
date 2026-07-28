@@ -2,8 +2,28 @@ url: https://ashgreat.github.io/endogCopulaPanel/
 
 template:
   bootstrap: 5
+  bslib:
+    bg: "#FBFBF8"
+    fg: "#0E1B2A"
+    primary: "#2E7D7D"
+    secondary: "#4FA8A8"
+    success: "#2E7D7D"
+    warning: "#F0A14B"
+    base_font: {google: "Inter"}
+    heading_font: {google: "Inter Tight"}
+    code_font: {google: "JetBrains Mono"}
+    font-size-base: "1.05rem"
+    link-color: "#1F6363"
+    # Navbar background. With light-switch disabled pkgdown sets the navbar
+    # colour with the `bg-*` HTML class below, and Bootstrap's `.bg-*`
+    # utilities are `!important`, so $navbar-bg alone loses. Redefining $dark
+    # is what actually paints the navbar; $navbar-bg keeps bslib's derived
+    # navbar foreground colours in step with it.
+    dark: "#0E1B2A"
+    navbar-bg: "#0E1B2A"
 
 navbar:
+  bg: dark
   structure:
     left:  [intro, reference, news]
     right: [related, github]
@@ -23,6 +43,37 @@ navbar:
 reference:
   - title: Panel Gaussian copula estimator
     desc: >
-      Fixed-effects panel Gaussian copula endogeneity correction (Haschka 2022).
+      Fixed-effects panel Gaussian copula endogeneity correction (Haschka
+      2022).
     contents:
-      - CopRegML_par
+      - CopRegPANEL
+
+  - title: Checking the identifying assumptions
+    desc: >
+      Diagnostics for the identification requirements behind the estimator.
+    contents:
+      - validity.copregpanel
+
+  - title: Working with a fitted model
+    desc: >
+      Extractors and S3 methods for objects returned by CopRegPANEL().
+    contents:
+      - coef.copregpanel
+      - confint.copregpanel
+      - fitted.copregpanel
+      - fixef
+      - fixef.copregpanel
+      - formula.copregpanel
+      - logLik.copregpanel
+      - nobs.copregpanel
+      - predict.copregpanel
+      - print.copregpanel
+      - residuals.copregpanel
+      - summary.copregpanel
+      - vcov.copregpanel
+
+  - title: Re-exports
+    desc: >
+      Generics re-exported from endogCopula.
+    contents:
+      - reexports
