@@ -8,21 +8,24 @@
 <title>Panel Gaussian Copula Endogeneity Correction • endogCopulaPanel</title>
 <script src="deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet">
-<script src="deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
+<script src="deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="deps/Inter-0.4.10/font.css" rel="stylesheet">
+<link href="deps/JetBrains_Mono-0.4.10/font.css" rel="stylesheet">
+<link href="deps/Inter_Tight-0.4.10/font.css" rel="stylesheet">
+<link href="deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Panel Gaussian Copula Endogeneity Correction">
-<meta name="description" content="Implements the fixed-effects panel Gaussian copula estimator of Haschka (2022) &lt;doi:10.1177/00222437211070820&gt;, ported from the published replication code into a standalone package. The estimator corrects for endogenous regressors in linear fixed-effects panel models without instrumental variables by transforming the data via forward orthogonal deviations and jointly estimating the regression and the copula dependence between the error and the endogenous regressors by maximum likelihood, with bootstrap standard errors computed in parallel.">
-<meta property="og:description" content="Implements the fixed-effects panel Gaussian copula estimator of Haschka (2022) &lt;doi:10.1177/00222437211070820&gt;, ported from the published replication code into a standalone package. The estimator corrects for endogenous regressors in linear fixed-effects panel models without instrumental variables by transforming the data via forward orthogonal deviations and jointly estimating the regression and the copula dependence between the error and the endogenous regressors by maximum likelihood, with bootstrap standard errors computed in parallel.">
+<meta name="description" content="Implements the fixed-effects panel Gaussian copula estimator of Haschka (2022) &lt;doi:10.1177/00222437211070820&gt;, ported from that authors reference implementation. The estimator corrects for endogenous regressors in linear fixed-effects panel models without instrumental variables by transforming the data via forward orthogonal deviations and jointly estimating the regression and the copula dependence between the error and the endogenous regressors by maximum likelihood, with bootstrap standard errors computed in parallel. It builds on the shared machinery in endogCopula', reusing its formula parsing, marginal CDF estimators and diagnostics.">
+<meta property="og:description" content="Implements the fixed-effects panel Gaussian copula estimator of Haschka (2022) &lt;doi:10.1177/00222437211070820&gt;, ported from that authors reference implementation. The estimator corrects for endogenous regressors in linear fixed-effects panel models without instrumental variables by transforming the data via forward orthogonal deviations and jointly estimating the regression and the copula dependence between the error and the endogenous regressors by maximum likelihood, with bootstrap standard errors computed in parallel. It builds on the shared machinery in endogCopula', reusing its formula parsing, marginal CDF estimators and diagnostics.">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
 
 
-    <nav class="navbar navbar-expand-lg fixed-top bg-light" data-bs-theme="light" aria-label="Site navigation"><div class="container">
+    <nav class="navbar navbar-expand-lg fixed-top bg-dark" data-bs-theme="dark" aria-label="Site navigation"><div class="container">
 
     <a class="navbar-brand me-2" href="index.html">endogCopulaPanel</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -32,6 +35,7 @@
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto">
 <li class="nav-item"><a class="nav-link" href="reference/index.html">Reference</a></li>
+<li class="nav-item"><a class="nav-link" href="news/index.html">Changelog</a></li>
       </ul>
 <ul class="navbar-nav">
 <li class="nav-item dropdown">
@@ -55,8 +59,8 @@
 <!-- badges: start -->
 
 <p>Package website: <a href="https://ashgreat.github.io/endogCopulaPanel/" class="uri">https://ashgreat.github.io/endogCopulaPanel/</a></p>
-<p><code>endogCopulaPanel</code> implements the fixed-effects Gaussian copula estimator for panel data by Haschka (2022, <em>Journal of Marketing Research</em>). The estimator corrects for endogenous regressors in linear fixed-effects panel models <strong>without instrumental variables</strong>: the data are transformed by forward orthogonal deviations within each panel, and the regression coefficients are estimated jointly with the Gaussian copula correlation(s) between the regression error and the endogenous regressor(s) by maximum likelihood. Bootstrap standard errors are computed in parallel.</p>
-<p>The package is a faithful port of the published replication code for copula-based endogeneity corrections (the <code>PANEL</code> estimator, <code>CopRegML_par</code>).</p>
+<p>endogCopulaPanel implements the fixed effects Gaussian copula estimator for panel data by Haschka (2022, Journal of Marketing Research). The estimator corrects for endogenous regressors in linear fixed effects panel models without instrumental variables. The data are transformed by forward orthogonal deviations within each panel, and the regression coefficients are estimated jointly with the Gaussian copula correlation between the regression error and each endogenous regressor by maximum likelihood. Standard errors come from a bootstrap that resamples whole panels.</p>
+<p>The package builds on endogCopula, which supplies the shared formula parsing, marginal CDF estimators and diagnostic helpers used across the whole toolbox.</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
@@ -67,68 +71,79 @@
 <div class="section level2">
 <h2 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a>
 </h2>
-<p>The exported function is <code><a href="reference/CopRegML_par.html">CopRegML_par()</a></code>. The model is specified with a two-part formula, <code>y ~ endog1 + endog2 | exog1 + exog2</code>, with the endogenous regressors in the first part and the exogenous regressors in the second (append <code>- 1</code> to drop the intercept). Because this is a fixed-effects model, all regressors — including dummy variables — must be time-varying.</p>
-<p>The panel structure is declared through the <code>index</code> argument, <code>index = c("panelvariable", "timevariable")</code>:</p>
-<ul>
-<li>the <strong>panel identifier comes first</strong>, as the forward orthogonal deviations transform and the bootstrap resampling operate within each panel;</li>
-<li>both identifier columns must be <strong>numeric</strong>;</li>
-<li>
-<code>data</code> should contain the <strong>untransformed</strong> panel data — the function applies the model transformation automatically.</li>
-</ul>
+<p>The exported function is <code><a href="reference/CopRegPANEL.html">CopRegPANEL()</a></code>. The model is specified with the same two part formula used across the toolbox, <code>y ~ endogenous | exogenous</code>, with the endogenous regressors before the bar and the exogenous regressors after it. <code><a href="https://rdrr.io/r/stats/lag.html" class="external-link">lag()</a></code>, <code>lead()</code> and <code><a href="https://rdrr.io/r/base/diff.html" class="external-link">diff()</a></code> can be used inside the formula and are panel aware, so they never look across a panel boundary.</p>
+<p>The panel structure is declared through the <code>index</code> argument, <code>index = c("id", "time")</code>. The panel identifier comes first, both identifier columns must be numeric, and <code>data</code> should hold the untransformed panel data, because <code><a href="reference/CopRegPANEL.html">CopRegPANEL()</a></code> applies the forward orthogonal deviations transformation itself.</p>
+<p>By default the transformed regression has no intercept, because a fixed effects transformation removes anything time invariant and the structural intercept is absorbed into the individual effects. Set <code>intercept = TRUE</code> only alongside a full set of time dummies.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ashgreat.github.io/endogCopulaPanel/">endogCopulaPanel</a></span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># small simulated panel: x is endogenous (correlated with the error) and</span></span>
-<span><span class="co"># non-normal, z is exogenous, alpha is a panel fixed effect</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span></span>
-<span><span class="va">N</span> <span class="op">&lt;-</span> <span class="fl">30</span>; <span class="va">Ti</span> <span class="op">&lt;-</span> <span class="fl">6</span></span>
-<span><span class="va">d</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>id <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="va">N</span>, each <span class="op">=</span> <span class="va">Ti</span><span class="op">)</span>, year <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="va">Ti</span>, times <span class="op">=</span> <span class="va">N</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="va">alpha</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="va">N</span><span class="op">)</span>, each <span class="op">=</span> <span class="va">Ti</span><span class="op">)</span></span>
-<span><span class="va">eps</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="va">N</span> <span class="op">*</span> <span class="va">Ti</span> <span class="op">*</span> <span class="fl">2</span><span class="op">)</span>, ncol <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html" class="external-link">%*%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/chol.html" class="external-link">chol</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">.5</span>, <span class="fl">.5</span>, <span class="fl">1</span><span class="op">)</span>, <span class="fl">2</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="va">d</span><span class="op">$</span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/scale.html" class="external-link">scale</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Lognormal.html" class="external-link">qlnorm</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">pnorm</a></span><span class="op">(</span><span class="va">eps</span><span class="op">[</span>, <span class="fl">2</span><span class="op">]</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="va">d</span><span class="op">$</span><span class="va">z</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="va">N</span> <span class="op">*</span> <span class="va">Ti</span><span class="op">)</span></span>
-<span><span class="va">d</span><span class="op">$</span><span class="va">y</span> <span class="op">&lt;-</span> <span class="va">alpha</span> <span class="op">+</span> <span class="va">d</span><span class="op">$</span><span class="va">x</span> <span class="op">+</span> <span class="va">d</span><span class="op">$</span><span class="va">z</span> <span class="op">+</span> <span class="va">eps</span><span class="op">[</span>, <span class="fl">1</span><span class="op">]</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span>
+<span><span class="va">N</span> <span class="op">&lt;-</span> <span class="fl">30L</span>; <span class="va">Time</span> <span class="op">&lt;-</span> <span class="fl">6L</span></span>
+<span><span class="va">d</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>id <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="va">N</span><span class="op">)</span>, each <span class="op">=</span> <span class="va">Time</span><span class="op">)</span>,</span>
+<span>                 year <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="va">Time</span><span class="op">)</span>, times <span class="op">=</span> <span class="va">N</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">alpha</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="va">N</span><span class="op">)</span>, each <span class="op">=</span> <span class="va">Time</span><span class="op">)</span></span>
+<span><span class="va">e</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="va">N</span> <span class="op">*</span> <span class="va">Time</span><span class="op">)</span></span>
+<span><span class="va">d</span><span class="op">$</span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">exp</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="va">N</span> <span class="op">*</span> <span class="va">Time</span><span class="op">)</span> <span class="op">+</span> <span class="fl">0.5</span> <span class="op">*</span> <span class="va">e</span><span class="op">)</span>   <span class="co"># endogenous: correlated with e</span></span>
+<span><span class="va">d</span><span class="op">$</span><span class="va">z</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="va">N</span> <span class="op">*</span> <span class="va">Time</span><span class="op">)</span>                  <span class="co"># exogenous</span></span>
+<span><span class="va">d</span><span class="op">$</span><span class="va">y</span> <span class="op">&lt;-</span> <span class="va">alpha</span> <span class="op">+</span> <span class="fl">0.5</span> <span class="op">*</span> <span class="va">d</span><span class="op">$</span><span class="va">x</span> <span class="op">+</span> <span class="va">d</span><span class="op">$</span><span class="va">z</span> <span class="op">+</span> <span class="va">e</span></span>
 <span></span>
-<span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/CopRegML_par.html">CopRegML_par</a></span><span class="op">(</span><span class="va">y</span> <span class="op">~</span> <span class="va">x</span> <span class="op">|</span> <span class="va">z</span>, index <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"id"</span>, <span class="st">"year"</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">d</span>,</span>
-<span>                    nboots <span class="op">=</span> <span class="fl">199</span>, seed <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/CopRegPANEL.html">CopRegPANEL</a></span><span class="op">(</span><span class="va">y</span> <span class="op">~</span> <span class="va">x</span> <span class="op">|</span> <span class="va">z</span>, data <span class="op">=</span> <span class="va">d</span>, index <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"id"</span>, <span class="st">"year"</span><span class="op">)</span>,</span>
+<span>                    nboots <span class="op">=</span> <span class="fl">15</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="va">fit</span></span></code></pre></div>
-<p>Setting <code>nboots</code> to 2 or fewer skips the bootstrap and returns point estimates only. The <code>seed</code> and <code>ncores</code> arguments make the parallel bootstrap reproducible and control the size of the worker cluster.</p>
+<p>This is the real output of the example above, run with <code>nboots = 15</code> to keep it fast. Use more bootstrap replicates in practice. The default is 199.</p>
+<pre><code>Panel copula MLE (Haschka 2022)
+
+Call:
+CopRegPANEL(formula = y ~ x | z, data = d, index = c("id", "year"),
+    nboots = 15, verbose = FALSE)
+
+Balanced panel: n = 30, T = 6, observations = 180
+
+Coefficients:
+     x       z
+0.4755  0.9448  </code></pre>
+<p><code>summary(fit)</code> adds standard errors, the copula correlation between each endogenous regressor and the error, a likelihood ratio and a bootstrap Wald test of no endogeneity, and R-squared:</p>
+<pre><code>Coefficients:
+  Estimate Std. Error z value Pr(&gt;|z|)
+x  0.47548    0.07064   6.731 1.69e-11 ***
+z  0.94479    0.12728   7.423 1.14e-13 ***
+
+Dependence parameters: rho(P*, xi*) is the correlation between the normal
+  score of an endogenous regressor and that of the error, and sigma^2 is the
+  variance of the error of the transformed model. rho = 0 means no endogeneity.
+             Estimate Std. Error z value Pr(&gt;|z|)
+rho(x*, xi*)   0.4469     0.1502   2.975  0.00293 **
+sigma2         0.9559     0.1245
+
+No endogeneity, all rho = 0:
+  likelihood ratio  chi-squared = 6.277 on 1 df, p = 0.01223
+  bootstrap Wald   chi-squared = 8.849 on 1 df, p = 0.002933</code></pre>
 </div>
 <div class="section level2">
-<h2 id="identifying-assumptions-and-diagnostics">Identifying assumptions and diagnostics<a class="anchor" aria-label="anchor" href="#identifying-assumptions-and-diagnostics"></a>
+<h2 id="checking-the-identifying-assumptions">Checking the identifying assumptions<a class="anchor" aria-label="anchor" href="#checking-the-identifying-assumptions"></a>
 </h2>
-<p>Identification of the copula correction rests on distributional assumptions that are partly testable. <code><a href="reference/CopRegML_par.html">CopRegML_par()</a></code> runs the following diagnostics and warns when an assumption looks violated:</p>
-<ul>
-<li>
-<strong>Non-normality of the endogenous regressors.</strong> Each endogenous regressor must be non-normally distributed, otherwise its copula-transformed values are indistinguishable from the (normal) error. Checked with an Anderson-Darling normality test; a warning is issued when normality cannot be rejected.</li>
-<li>
-<strong>Symmetry/normality of the residuals.</strong> The regression error is assumed Gaussian, so the residual distribution should be symmetric. Checked with the Jarque-Bera skewness test; a warning is issued when symmetry is rejected.</li>
-<li>
-<strong>Separation of regressor and error distributions.</strong> The distribution of each endogenous regressor must differ sufficiently from the residual distribution. Checked with a Kolmogorov-Smirnov test between the scaled residuals and each scaled endogenous regressor; a warning is issued when the distance is too small for reliable identification.</li>
-</ul>
+<p>Identification of the copula correction rests on distributional assumptions that are partly testable. <code>validity(fit)</code>, an S3 method re-exported from endogCopula, checks three things: non-normality of each endogenous regressor after the panel transformation, since identification needs that non-normality; normality of the error of the transformed model, which the likelihood assumes directly; and how much the copula-corrected standard errors are inflated relative to the uncorrected within estimator, where a large inflation factor signals weak identification.</p>
 </div>
 <div class="section level2">
 <h2 id="related-packages">Related packages<a class="anchor" aria-label="anchor" href="#related-packages"></a>
 </h2>
 <ul>
-<li>
-<a href="https://github.com/ashgreat/endogCopula" class="external-link">endogCopula</a> — cross-sectional Gaussian copula corrections (Park and Gupta 2012, 2sCOPE, 2sCOPE-np, IMA, BWM, JAMS) with a shared formula interface.</li>
-<li>
-<a href="https://github.com/ashgreat/endogCopulaBayes" class="external-link">endogCopulaBayes</a> — Bayesian Gaussian copula joint-estimation sampler (Haschka 2022b).</li>
+<li>endogCopula (<a href="https://github.com/ashgreat/endogCopula" class="external-link uri">https://github.com/ashgreat/endogCopula</a>): cross-sectional Gaussian copula corrections with a shared formula interface.</li>
+<li>endogCopulaBayes (<a href="https://github.com/ashgreat/endogCopulaBayes" class="external-link uri">https://github.com/ashgreat/endogCopulaBayes</a>): the Bayesian Gaussian copula sampler of Haschka (2025).</li>
 </ul>
 </div>
 <div class="section level2">
 <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
 </h2>
 <ul>
-<li>Haschka, R. E. (2022). Handling endogenous regressors using copulas: A generalisation to linear panel models with fixed effects and correlated regressors. <em>Journal of Marketing Research</em>, 59(4), 860–881.</li>
-<li>Park, S. and S. Gupta (2012). Handling endogenous regressors by joint estimation using copulas. <em>Marketing Science</em>, 31(4), 567–586.</li>
+<li>Haschka, R. E. (2022). Handling endogenous regressors using copulas: a generalization to linear panel models with fixed effects and correlated regressors. Journal of Marketing Research, 59(4), 861-880.</li>
+<li>Park, S. and S. Gupta (2012). Handling endogenous regressors by joint estimation using copulas. Marketing Science, 31(4), 567-586.</li>
 </ul>
 </div>
 <div class="section level2">
 <h2 id="license">License<a class="anchor" aria-label="anchor" href="#license"></a>
 </h2>
-<p>MIT © Ashwin Malshe</p>
+<p>MIT (c) Ashwin Malshe</p>
 </div>
 </div>
   </main><aside class="col-md-3"><div class="links">
@@ -159,6 +174,7 @@
 <h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
 <li>Ashwin Malshe <br><small class="roles"> Author, maintainer </small>   </li>
+<li><a href="authors.html">More about authors...</a></li>
 </ul>
 </div>
 
@@ -178,7 +194,7 @@
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
     </footer>
