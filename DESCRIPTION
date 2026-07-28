@@ -1,36 +1,33 @@
 Package: endogCopulaPanel
 Type: Package
 Title: Panel Gaussian Copula Endogeneity Correction
-Version: 0.1.0
-Authors@R: person(given = "Ashwin", family = "Malshe", role = c("aut", "cre"),
-    email = "ashwin@malshe.com")
-Description: Implements the fixed-effects panel 'Gaussian copula' estimator of
-    Haschka (2022) <doi:10.1177/00222437211070820>, ported from the published
-    replication code into a standalone package. The estimator corrects for
+Version: 0.2.0
+Authors@R: c(
+    person(given = "Ashwin", family = "Malshe", role = c("aut", "cre"),
+    email = "ashwin@malshe.com"),
+    person(given = "Rouven E.", family = "Haschka", role = c("ctb", "cph"),
+    comment = "Author of the reference implementation that the panel copula estimator in this package is ported from"))
+Description: Implements the fixed-effects panel Gaussian copula estimator of
+    Haschka (2022) <doi:10.1177/00222437211070820>, ported from that
+    author's reference implementation. The estimator corrects for
     endogenous regressors in linear fixed-effects panel models without
     instrumental variables by transforming the data via forward orthogonal
-    deviations and jointly estimating the regression and the copula dependence
-    between the error and the endogenous regressors by maximum likelihood, with
-    bootstrap standard errors computed in parallel.
+    deviations and jointly estimating the regression and the copula
+    dependence between the error and the endogenous regressors by maximum
+    likelihood, with bootstrap standard errors computed in parallel. It
+    builds on the shared machinery in 'endogCopula', reusing its formula
+    parsing, marginal CDF estimators and diagnostics.
 License: MIT + file LICENSE
 URL: https://ashgreat.github.io/endogCopulaPanel/, https://github.com/ashgreat/endogCopulaPanel
 BugReports: https://github.com/ashgreat/endogCopulaPanel/issues
 Depends: R (>= 4.1)
-Imports: Formula,
-         copula,
-         dplyr,
-         extRC,
-         ks,
-         matrixcalc,
-         nlme,
-         nortest,
+Imports: endogCopula,
+         Formula,
          parallel,
-         pbapply,
-         resample,
          stats,
-         tsoutliers,
          utils
 Suggests: testthat (>= 3.0.0)
+Remotes: ashgreat/endogCopula
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.3
